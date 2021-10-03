@@ -8,25 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv-safe/config");
-const express_1 = __importDefault(require("express"));
+const products_1 = require("./data/products");
 const db_1 = require("./config/db");
-const productRoutes_1 = require("./routes/productRoutes");
-const main = () => __awaiter(void 0, void 0, void 0, function* () {
+const Product_1 = require("./models/Product");
+const importData = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, db_1.connectDB)();
-    const app = (0, express_1.default)();
-    app.use(express_1.default.json());
-    app.use('./products', productRoutes_1.ProductRoutes);
-    const PORT = process.env.PORT || 4000;
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
+    try {
+        yield Product_1.Product.deleteMany({});
+        yield Product_1.Product.insertMany(products_1.products);
+        console.log("Data imported yayy");
+        process.exit();
+    }
+    catch (error) {
+        console.log("Data imported error ", error);
+        process.exit(1);
+    }
 });
-main().catch((err) => {
-    console.log("error starting server ", err);
-});
-//# sourceMappingURL=index.js.map
+importData();
+//# sourceMappingURL=seederScript.js.map
