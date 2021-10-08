@@ -14,13 +14,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv-safe/config");
 const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
 const db_1 = require("./config/db");
-const productRoutes_1 = require("./routes/productRoutes");
+const productRoutes = require('./routes/productRoutes');
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, db_1.connectDB)();
     const app = (0, express_1.default)();
+    app.use((0, cors_1.default)({ origin: true, credentials: true }));
     app.use(express_1.default.json());
-    app.use('./products', productRoutes_1.ProductRoutes);
+    app.get("/", (_req, res) => {
+        res.json({ message: "API running..." });
+    });
+    app.use('/api/products', productRoutes);
     const PORT = process.env.PORT || 4000;
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);

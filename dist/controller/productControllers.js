@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetProductById = exports.GetAllProducts = void 0;
 const Product_1 = require("../models/Product");
-const GetAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const GetAllProducts = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const products = yield Product_1.Product.find({});
         res.json(products);

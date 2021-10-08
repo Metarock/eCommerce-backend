@@ -1,6 +1,7 @@
 import { Product } from "../models/Product"
+import { Request, Response } from 'express';
 
-export const GetAllProducts = async (req: any, res: any) => {
+export const GetAllProducts = async (_req: Request, res: Response) => {
     try {
         const products = await Product.find({});
 
@@ -14,7 +15,7 @@ export const GetAllProducts = async (req: any, res: any) => {
 
 
 
-export const GetProductById = async (req: any, res: any) => {
+export const GetProductById = async (req: Request, res: Response) => {
     try {
         const product = await Product.findById(req.params.id);
 
